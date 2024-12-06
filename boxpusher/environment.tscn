@@ -25,12 +25,10 @@ size = Vector3(10, 10, 1)
 albedo_color = Color(0, 1, 0, 1)
 emission = Color(0, 1, 0, 1)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_3ke1b"]
+[sub_resource type="BoxMesh" id="BoxMesh_a4sem"]
 material = SubResource("StandardMaterial3D_8cis3")
-height = 1.0
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_02abi"]
-height = 1.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_uogtd"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_5duk2"]
 
@@ -59,7 +57,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 shape = SubResource("BoxShape3D_srl0t")
 
-[node name="Walls" type="StaticBody3D" parent="."]
+[node name="Walls" type="StaticBody3D" parent="." groups=["Walls"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.5)
@@ -77,23 +75,43 @@ shape = SubResource("BoxShape3D_koke7")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.5, 0, 0)
 shape = SubResource("BoxShape3D_koke7")
 
-[node name="Agent" type="RigidBody3D" parent="." node_paths=PackedStringArray("object", "target_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.74257)
+[node name="evilZones" type="Area3D" parent="." groups=["Walls"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="evilZones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+shape = SubResource("BoxShape3D_koke7")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="evilZones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+shape = SubResource("BoxShape3D_koke7")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="evilZones"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, 0)
+shape = SubResource("BoxShape3D_koke7")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="evilZones"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, 0)
+shape = SubResource("BoxShape3D_koke7")
+
+[node name="Agent" type="RigidBody3D" parent="." node_paths=PackedStringArray("object", "target_area", "ai_controller") groups=["Agent"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0127002, -2.74257)
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_ekbrq")
+can_sleep = false
 script = ExtResource("1_m0sfa")
 object = NodePath("../Object")
 target_area = NodePath("../TargetArea")
+ai_controller = NodePath("AIController3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Agent"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("CylinderMesh_3ke1b")
+mesh = SubResource("BoxMesh_a4sem")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Agent"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("CylinderShape3D_02abi")
+shape = SubResource("BoxShape3D_uogtd")
 
 [node name="AIController3D" type="Node3D" parent="Agent"]
 script = ExtResource("2_g6x7v")
@@ -119,10 +137,5 @@ mesh = SubResource("BoxMesh_uohgv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TargetArea"]
 shape = SubResource("BoxShape3D_gb5ca")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.309797, 0.950803, 0, -0.950803, 0.309797, 2.38419e-07, 6.71689, 3.23908)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.777014, -0.534373, 0.332708, 0, 0.528542, 0.848907, -0.629483, -0.659613, 0.410685, 0, 4.24852, 1.65314)
-
+[connection signal="body_entered" from="evilZones" to="Agent" method="_on_evil_zones_body_entered"]
 [connection signal="body_entered" from="TargetArea" to="Agent" method="_on_target_area_body_entered"]

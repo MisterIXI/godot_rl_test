@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3j1lfqahtiof"]
+
+[ext_resource type="PackedScene" uid="uid://di8oh8r2wmwyu" path="res://environment.tscn" id="1_5ch0y"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_ms0k2"]
+
+[node name="Batch_env" type="Node3D"]
+
+[node name="Environment1" parent="." instance=ExtResource("1_5ch0y")]
+
+[node name="Environment2" parent="." instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+
+[node name="Environment3" parent="." instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 0)
+
+[node name="Environment4" parent="." instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+
+[node name="Environment5" parent="." instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+
+[node name="Environment6" parent="." instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -15)
+
+[node name="Environment7" parent="." instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+
+[node name="Environment8" parent="." instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -30)
+
+[node name="Environment9" parent="." instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -30)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.999997, -0.0021373, 0.00144718, 0, 0.560669, 0.82804, -0.00258116, -0.828037, 0.560667, 16.9018, 24.5027, 7.38866)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.306186, 0.918559, -0.25, -0.353553, 0.353553, 0.866026, 0.883884, -0.176777, 0.433013, 0, 10, 0)
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_ms0k2")
+speed_up = 5.0

@@ -9,7 +9,6 @@ var move: Vector2 = Vector2.ZERO
 #-- Methods that need implementing using the "extend script" option in Godot --#
 
 func get_obs() -> Dictionary:
-	assert(false, "the get_obs method is not implemented when extending from ai_controller") 
 	return {"obs":[
 		player.position.x,
 		player.position.z,
@@ -22,7 +21,7 @@ func get_obs() -> Dictionary:
 	]}
 
 func get_reward() -> float:	
-	return player.reward
+	return player.calc_reward()
 	
 func get_action_space() -> Dictionary:
 	return {
