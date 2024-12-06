@@ -1,27 +1,62 @@
-# meta-name: AI Controller Logic
-# meta-description: Methods that need implementing for AI controllers
-# meta-default: true
-extends AIController3D
+extends Node3D
 class_name PusherAIController
 
-@onready var player: PusherAgent = get_parent()
-var move: Vector2 = Vector2.ZERO
-#-- Methods that need implementing using the "extend script" option in Godot --#
+enum ControlModes { INHERIT_FROM_SYNC, HUMAN, TRAINING, ONNX_INFERENCE, RECORD_EXPERT_DEMOS }
+@export var control_mode: ControlModes = ControlModes.INHERIT_FROM_SYNC
+@export var onnx_model_path := ""
+@export var reset_after := 20
 
+@export_group("Record expert demos mode options")
+## Path where the demos will be saved. The file can later be used for imitation learning.
+@export var expert_demo_save_path: String
+## The action that erases the last recorded episode from the currently recorded data.
+@export var remove_last_episode_key: InputEvent
+## Action will be repeated for n frames. Will introduce control lag if larger than 1.
+## Can be used to ensure that action_repeat on inference and training matches
+## the recorded demonstrations.
+@export var action_repeat: int = 1
+
+@export_group("Multi-policy mode options")
+## Allows you to set certain agents to use different policies.
+## Changing has no effect with default SB3 training. Works with Rllib example.
+## Tutorial: https://github.com/edbeeching/godot_rl_agents/blob/main/docs/TRAINING_MULTIPLE_POLICIES.md
+@export var policy_name: String = "shared_policy"
+
+var onnx_model: ONNXModel
+
+var heuristic := "human"
+var done := false
+var reward := 0.0
+var n_steps := 0
+var needs_reset := false
+
+var _player: PusherAgent
+var move := Vector2.ZERO
+
+func _ready():
+	add_to_group("AGENT")
+
+
+func init(player: Node3D):
+	_player = player
+
+
+#-- Methods that need implementing using the "extend script" option in Godot --#
 func get_obs() -> Dictionary:
 	return {"obs":[
-		player.position.x,
-		player.position.z,
-		player.linear_velocity.x,
-		player.linear_velocity.z,
-		player.object.position.x,
-		player.object.position.z,
-		player.target_area.position.x,
-		player.target_area.position.z
+		_player.position.x,
+		_player.position.z,
+		_player.linear_velocity.x,
+		_player.linear_velocity.z,
+		_player.object.position.x,
+		_player.object.position.z,
+		_player.object.rotation_degrees.y / 360,
+		_player.target_area.position.x,
+		_player.target_area.position.z
 	]}
 
 func get_reward() -> float:	
-	return player.calc_reward()
+	return _player.calc_reward() + reward
 	
 func get_action_space() -> Dictionary:
 	return {
@@ -34,16 +69,59 @@ func get_action_space() -> Dictionary:
 func set_action(action) -> void:	
 	move.x = action["move"][0]
 	move.y = action["move"][1]
+
+#-----------------------------------------------------------------------------#
+
+
+#-- Methods that sometimes need implementing using the "extend script" option in Godot --#
+# Only needed if you are recording expert demos with this AIController
+func get_action() -> Array:
+	assert(false, "the get_action method is not implemented in extended AIController but demo_recorder is used")
+	return []
+
 # -----------------------------------------------------------------------------#
 
-#-- Methods that can be overridden if needed --#
 
-#func get_obs_space() -> Dictionary:
-# May need overriding if the obs space is complex
-#	var obs = get_obs()
-#	return {
-#		"obs": {
-#			"size": [len(obs["obs"])],
-#			"space": "box"
-#		},
-#	}
+func _physics_process(_delta):
+	n_steps += 1
+	if n_steps > reset_after:
+		needs_reset = true
+	if needs_reset:
+		reset()
+	reset_if_done()
+
+
+func get_obs_space():
+	# may need overriding if the obs space is complex
+	var obs = get_obs()
+	return {
+		"obs": {"size": [len(obs["obs"])], "space": "box"},
+	}
+
+
+func reset():
+	n_steps = 0
+	_player.reset_env()
+	needs_reset = false
+
+
+func reset_if_done():
+	if done:
+		reset()
+
+
+func set_heuristic(h):
+	# sets the heuristic from "human" or "model" nothing to change here
+	heuristic = h
+
+
+func get_done():
+	return done
+
+
+func set_done_false():
+	done = false
+
+
+func zero_reward():
+	reward = 0.0

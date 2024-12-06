@@ -5,34 +5,117 @@
 
 [node name="Batch_env" type="Node3D"]
 
-[node name="Environment1" parent="." instance=ExtResource("1_5ch0y")]
+[node name="envs" type="Node3D" parent="."]
 
-[node name="Environment2" parent="." instance=ExtResource("1_5ch0y")]
+[node name="Environment1" parent="envs" instance=ExtResource("1_5ch0y")]
+
+[node name="Environment2" parent="envs" instance=ExtResource("1_5ch0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
 
-[node name="Environment3" parent="." instance=ExtResource("1_5ch0y")]
+[node name="Environment3" parent="envs" instance=ExtResource("1_5ch0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 0)
 
-[node name="Environment4" parent="." instance=ExtResource("1_5ch0y")]
+[node name="Environment4" parent="envs" instance=ExtResource("1_5ch0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
 
-[node name="Environment5" parent="." instance=ExtResource("1_5ch0y")]
+[node name="Environment5" parent="envs" instance=ExtResource("1_5ch0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
 
-[node name="Environment6" parent="." instance=ExtResource("1_5ch0y")]
+[node name="Environment6" parent="envs" instance=ExtResource("1_5ch0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -15)
 
-[node name="Environment7" parent="." instance=ExtResource("1_5ch0y")]
+[node name="Environment7" parent="envs" instance=ExtResource("1_5ch0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
 
-[node name="Environment8" parent="." instance=ExtResource("1_5ch0y")]
+[node name="Environment8" parent="envs" instance=ExtResource("1_5ch0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -30)
 
-[node name="Environment9" parent="." instance=ExtResource("1_5ch0y")]
+[node name="Environment9" parent="envs" instance=ExtResource("1_5ch0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -30)
 
+[node name="Environment10" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 0)
+
+[node name="Environment11" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 0)
+
+[node name="Environment12" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 0)
+
+[node name="Environment13" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, -15)
+
+[node name="Environment14" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -15)
+
+[node name="Environment15" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, -15)
+
+[node name="Environment16" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, -30)
+
+[node name="Environment17" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -30)
+
+[node name="Environment18" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, -30)
+
+[node name="Environment19" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45)
+
+[node name="Environment20" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -45)
+
+[node name="Environment21" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -45)
+
+[node name="Environment22" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -60)
+
+[node name="Environment23" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -60)
+
+[node name="Environment24" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -60)
+
+[node name="Environment25" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -75)
+
+[node name="Environment26" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -75)
+
+[node name="Environment27" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -75)
+
+[node name="Environment28" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, -45)
+
+[node name="Environment29" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -45)
+
+[node name="Environment30" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, -45)
+
+[node name="Environment31" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, -60)
+
+[node name="Environment32" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -60)
+
+[node name="Environment33" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, -60)
+
+[node name="Environment34" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, -75)
+
+[node name="Environment35" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -75)
+
+[node name="Environment36" parent="envs" instance=ExtResource("1_5ch0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, -75)
+
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.999997, -0.0021373, 0.00144718, 0, 0.560669, 0.82804, -0.00258116, -0.828037, 0.560667, 16.9018, 24.5027, 7.38866)
+transform = Transform3D(0.999976, -0.00593051, 0.00361321, 0, 0.520298, 0.853985, -0.00694451, -0.853964, 0.520285, 36.677, 44.9249, 4.64413)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.306186, 0.918559, -0.25, -0.353553, 0.353553, 0.866026, 0.883884, -0.176777, 0.433013, 0, 10, 0)

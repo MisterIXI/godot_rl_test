@@ -75,24 +75,6 @@ shape = SubResource("BoxShape3D_koke7")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.5, 0, 0)
 shape = SubResource("BoxShape3D_koke7")
 
-[node name="evilZones" type="Area3D" parent="." groups=["Walls"]]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="evilZones"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-shape = SubResource("BoxShape3D_koke7")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="evilZones"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
-shape = SubResource("BoxShape3D_koke7")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="evilZones"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, 0)
-shape = SubResource("BoxShape3D_koke7")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="evilZones"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, 0)
-shape = SubResource("BoxShape3D_koke7")
-
 [node name="Agent" type="RigidBody3D" parent="." node_paths=PackedStringArray("object", "target_area", "ai_controller") groups=["Agent"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0127002, -2.74257)
 axis_lock_angular_x = true
@@ -115,6 +97,12 @@ shape = SubResource("BoxShape3D_uogtd")
 
 [node name="AIController3D" type="Node3D" parent="Agent"]
 script = ExtResource("2_g6x7v")
+control_mode = null
+onnx_model_path = null
+reset_after = 600
+expert_demo_save_path = null
+action_repeat = null
+policy_name = null
 
 [node name="Object" type="RigidBody3D" parent="." groups=["Object"]]
 collision_layer = 3
@@ -137,5 +125,4 @@ mesh = SubResource("BoxMesh_uohgv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TargetArea"]
 shape = SubResource("BoxShape3D_gb5ca")
 
-[connection signal="body_entered" from="evilZones" to="Agent" method="_on_evil_zones_body_entered"]
 [connection signal="body_entered" from="TargetArea" to="Agent" method="_on_target_area_body_entered"]
