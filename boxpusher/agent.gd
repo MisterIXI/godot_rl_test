@@ -7,8 +7,8 @@ class_name PusherAgent
 @export var manual_control: bool = false
 var last_dist = 0.0
 var was_just_reset = false
-const SPEED = 5.0
-const ACCELLERATION = 15.0
+const SPEED = 4.0
+const ACCELLERATION = 20.0
 const EPS = 0.1
 
 func _ready():
@@ -55,12 +55,12 @@ func calc_reward():
 	var dist_to_cube = object.position.distance_to(position)
 	if not was_just_reset: # ignore after teleport of target, because that would punish unnecessarily
 		if distance < last_dist - EPS: # if we're getting closer
-			reward += 0.5
+			reward += 1
 		elif distance > last_dist + EPS: # if we're getting further away
 			reward -= 0.5
 		else: # if we're not moving
 			reward -= 0.5
-		reward += max(-10,1 - dist_to_cube)*0.3 # reward for agent being close to object
+		reward += max(-10,-dist_to_cube)*0.3 # reward for agent being close to object
 	else:
 		was_just_reset = false
 	# reward for being close to object
@@ -87,7 +87,7 @@ func is_object_at_wall():
 
 func _on_target_area_body_entered(body: Node3D) -> void:
 	if body.is_in_group("Object"):
-		ai_controller.reward += 1
+		ai_controller.reward += 2
 		ai_controller.done = true
 
 

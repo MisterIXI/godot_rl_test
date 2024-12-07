@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://di8oh8r2wmwyu"]
+[gd_scene load_steps=18 format=3 uid="uid://di8oh8r2wmwyu"]
 
 [ext_resource type="Script" path="res://agent.gd" id="1_m0sfa"]
 [ext_resource type="Script" path="res://pusher_ai_controller.gd" id="2_g6x7v"]
@@ -30,9 +30,14 @@ material = SubResource("StandardMaterial3D_8cis3")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uogtd"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r7x8e"]
+friction = 0.66
+
 [sub_resource type="BoxMesh" id="BoxMesh_5duk2"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lnu8n"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6lo2j"]
 transparency = 1
@@ -99,7 +104,7 @@ shape = SubResource("BoxShape3D_uogtd")
 script = ExtResource("2_g6x7v")
 control_mode = null
 onnx_model_path = null
-reset_after = 600
+reset_after = 900
 expert_demo_save_path = null
 action_repeat = null
 policy_name = null
@@ -107,13 +112,15 @@ policy_name = null
 [node name="Object" type="RigidBody3D" parent="." groups=["Object"]]
 collision_layer = 3
 collision_mask = 3
+mass = 0.4
+physics_material_override = SubResource("PhysicsMaterial_r7x8e")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Object"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 mesh = SubResource("BoxMesh_5duk2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Object"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("BoxShape3D_lnu8n")
 
 [node name="TargetArea" type="Area3D" parent="."]
