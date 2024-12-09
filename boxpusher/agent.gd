@@ -5,11 +5,16 @@ class_name PusherAgent
 @export var target_area: Area3D
 @export var ai_controller: PusherAIController
 @export var manual_control: bool = false
+@export var agent_collision_shape: CollisionShape3D
+@export var agent_mesh: MeshInstance3D
+
 var last_dist = 0.0
 var was_just_reset = false
-const SPEED = 4.0
+const SPEED = 2.0
 const ACCELLERATION = 20.0
+const ROTATION_SPEED = 2.0
 const EPS = 0.1
+var body_rotation: = 0.0
 
 func _ready():
 	ai_controller.init(self)
@@ -20,9 +25,15 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
 		var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		# var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y))
+		var direction := (Vector3(input_dir.x, 0, input_dir.y))
+
+		var rotate_input := Input.get_action_strength("rotate_left") - Input.get_action_strength("rotate_right")
 		if input_dir.length() != 0:
 			state.linear_velocity = linear_velocity.move_toward(direction * SPEED, ACCELLERATION * state.step)
+		angular_velocity.y = rotate_input * ROTATION_SPEED
+
+
 		# print("input: %s, vel: %s" % [input_dir, state.linear_velocity])
 	else:
 		var input_dir := ai_controller.move
@@ -30,6 +41,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 			input_dir = input_dir.normalized()
 		if input_dir.length() != 0:
 			state.linear_velocity = linear_velocity.move_toward(Vector3(input_dir.x, 0, input_dir.y) * SPEED, ACCELLERATION * state.step)
+		angular_velocity.y = ai_controller.rotate_input * ROTATION_SPEED
 
 func move_area_to_random_spot():
 	target_area.position = Vector3(randf_range(-3.8, 3.8), 0, randf_range(-3.8, 3.8))
@@ -41,12 +53,16 @@ func move_object_to_random_spot():
 	object.position = Vector3(randf_range(-3.8, 3.8), 0, randf_range(-3.8, 3.8))
 	while object.position.distance_to(target_area.position) < 2 or object.position.distance_to(position) < 2:
 		object.position = Vector3(randf_range(-3.8, 3.8), 0, randf_range(-3.8, 3.8))
+	object.linear_velocity = Vector3.ZERO
+	object.angular_velocity = Vector3.ZERO
 	was_just_reset = true
 
 func move_agent_to_random_spot():
 	position = Vector3(randf_range(-3.8, 3.8), 0, randf_range(-3.8, 3.8))
 	while position.distance_to(target_area.position) < 2 or position.distance_to(object.position) < 2:
 		position = Vector3(randf_range(-3.8, 3.8), 0, randf_range(-3.8, 3.8))
+	linear_velocity = Vector3.ZERO
+	angular_velocity = Vector3.ZERO
 	was_just_reset = true
 
 func calc_reward():

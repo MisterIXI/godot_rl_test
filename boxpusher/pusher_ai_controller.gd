@@ -1,7 +1,7 @@
 extends Node3D
 class_name PusherAIController
 
-enum ControlModes { INHERIT_FROM_SYNC, HUMAN, TRAINING, ONNX_INFERENCE, RECORD_EXPERT_DEMOS }
+enum ControlModes {INHERIT_FROM_SYNC, HUMAN, TRAINING, ONNX_INFERENCE, RECORD_EXPERT_DEMOS}
 @export var control_mode: ControlModes = ControlModes.INHERIT_FROM_SYNC
 @export var onnx_model_path := ""
 @export var reset_after := 20
@@ -32,6 +32,7 @@ var needs_reset := false
 
 var _player: PusherAgent
 var move := Vector2.ZERO
+var rotate_input: float = 0.0
 
 func _ready():
 	add_to_group("AGENT")
@@ -43,11 +44,13 @@ func init(player: Node3D):
 
 #-- Methods that need implementing using the "extend script" option in Godot --#
 func get_obs() -> Dictionary:
-	return {"obs":[
+	return {"obs": [
 		_player.position.x,
 		_player.position.z,
 		_player.linear_velocity.x,
 		_player.linear_velocity.z,
+		_player.angular_velocity.y,
+		_player.rotation_degrees.y / 360,
 		_player.object.position.x,
 		_player.object.position.z,
 		_player.object.rotation_degrees.y / 360,
@@ -55,20 +58,25 @@ func get_obs() -> Dictionary:
 		_player.target_area.position.z
 	]}
 
-func get_reward() -> float:	
+func get_reward() -> float:
 	return _player.calc_reward() + reward
 	
 func get_action_space() -> Dictionary:
 	return {
-		"move" : {
+		"move": {
 			"size": 2,
 			"action_type": "continuous"
 		},
+		"rotate": {
+			"size": 1,
+			"action_type": "continuous"
 		}
+	}
 	
-func set_action(action) -> void:	
+func set_action(action) -> void:
 	move.x = action["move"][0]
 	move.y = action["move"][1]
+	rotate_input = action["rotate"][0]
 
 #-----------------------------------------------------------------------------#
 

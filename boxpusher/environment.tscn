@@ -31,7 +31,6 @@ material = SubResource("StandardMaterial3D_8cis3")
 [sub_resource type="BoxShape3D" id="BoxShape3D_uogtd"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r7x8e"]
-friction = 0.66
 
 [sub_resource type="BoxMesh" id="BoxMesh_5duk2"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -80,10 +79,9 @@ shape = SubResource("BoxShape3D_koke7")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.5, 0, 0)
 shape = SubResource("BoxShape3D_koke7")
 
-[node name="Agent" type="RigidBody3D" parent="." node_paths=PackedStringArray("object", "target_area", "ai_controller") groups=["Agent"]]
+[node name="Agent" type="RigidBody3D" parent="." node_paths=PackedStringArray("object", "target_area", "ai_controller", "agent_collision_shape", "agent_mesh") groups=["Agent"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0127002, -2.74257)
 axis_lock_angular_x = true
-axis_lock_angular_y = true
 axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_ekbrq")
 can_sleep = false
@@ -91,6 +89,8 @@ script = ExtResource("1_m0sfa")
 object = NodePath("../Object")
 target_area = NodePath("../TargetArea")
 ai_controller = NodePath("AIController3D")
+agent_collision_shape = NodePath("CollisionShape3D")
+agent_mesh = NodePath("MeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Agent"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -102,12 +102,7 @@ shape = SubResource("BoxShape3D_uogtd")
 
 [node name="AIController3D" type="Node3D" parent="Agent"]
 script = ExtResource("2_g6x7v")
-control_mode = null
-onnx_model_path = null
 reset_after = 900
-expert_demo_save_path = null
-action_repeat = null
-policy_name = null
 
 [node name="Object" type="RigidBody3D" parent="." groups=["Object"]]
 collision_layer = 3

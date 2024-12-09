@@ -122,4 +122,4 @@ transform = Transform3D(0.306186, 0.918559, -0.25, -0.353553, 0.353553, 0.866026
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_ms0k2")
-speed_up = 5.0
+speed_up = 6.0
