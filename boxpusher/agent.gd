@@ -90,10 +90,12 @@ func reset_env():
 	# random object rotation on y
 	object.rotation.y = randf_range(0, 6.28)
 	ai_controller.reward = 0
+	
 
 func is_at_wall():
 	if (position.x > 4.3 or position.x < -4.3) or (position.z > 4.3 or position.z < -4.3):
 		return true
+		
 	return false
 
 func is_object_at_wall():

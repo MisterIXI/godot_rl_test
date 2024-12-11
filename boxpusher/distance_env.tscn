@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://qky6ebw121xl"]
+
+[ext_resource type="Script" path="res://DistanceKeeper/distance_agent.gd" id="1_ml1fe"]
+[ext_resource type="Script" path="res://DistanceKeeper/distance_controller.gd" id="2_1td2m"]
+[ext_resource type="Script" path="res://DistanceKeeper/obstacle_movement.gd" id="3_lqxfl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2dgn7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_s4eiv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_blb7g"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y07lu"]
+material = SubResource("StandardMaterial3D_blb7g")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ubnt1"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s0g4v"]
+size = Vector2(20, 2)
+
+[node name="distance_env" type="Node3D"]
+
+[node name="DistanceAgent" type="CharacterBody3D" parent="." node_paths=PackedStringArray("obstacle", "ai_controller")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.02514, 0, 0)
+script = ExtResource("1_ml1fe")
+obstacle = NodePath("../DistanceObstacle")
+ai_controller = NodePath("DistanceController")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DistanceAgent"]
+shape = SubResource("BoxShape3D_2dgn7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DistanceAgent"]
+mesh = SubResource("BoxMesh_s4eiv")
+
+[node name="DistanceController" type="Node3D" parent="DistanceAgent"]
+script = ExtResource("2_1td2m")
+reset_after = 600
+
+[node name="DistanceObstacle" type="CharacterBody3D" parent="."]
+script = ExtResource("3_lqxfl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DistanceObstacle"]
+mesh = SubResource("BoxMesh_y07lu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DistanceObstacle"]
+shape = SubResource("BoxShape3D_ubnt1")
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("PlaneMesh_s0g4v")

@@ -127,4 +127,10 @@ mesh = SubResource("BoxMesh_uohgv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TargetArea"]
 shape = SubResource("BoxShape3D_gb5ca")
 
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.999936, -0.0109265, 0.00293707, 0, 0.259589, 0.965719, -0.0113143, -0.965657, 0.259572, 0.170932, 13.4453, 4.69094)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.440734, 0.423195, 0.791618, -0.618779, -0.495638, 0.609471, 0.650281, -0.758452, 0.0434202, 0, 5.68404, 0)
+
 [connection signal="body_entered" from="TargetArea" to="Agent" method="_on_target_area_body_entered"]
