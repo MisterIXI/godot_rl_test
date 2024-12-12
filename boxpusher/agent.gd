@@ -69,17 +69,19 @@ func calc_reward():
 	var distance = object.position.distance_to(target_area.position)
 	var reward = 0
 	var dist_to_cube = object.position.distance_to(position)
-	if not was_just_reset: # ignore after teleport of target, because that would punish unnecessarily
-		if distance < last_dist - EPS: # if we're getting closer
-			reward += 1
-		elif distance > last_dist + EPS: # if we're getting further away
-			reward -= 0.5
-		else: # if we're not moving
-			reward -= 0.5
-		reward += max(-10,-dist_to_cube)*0.3 # reward for agent being close to object
-	else:
-		was_just_reset = false
+	# if not was_just_reset: # ignore after teleport of target, because that would punish unnecessarily
+	# 	if distance < last_dist - EPS: # if we're getting closer
+	# 		reward += 1
+	# 	elif distance > last_dist + EPS: # if we're getting further away
+	# 		reward -= 0.5
+	# 	else: # if we're not moving
+	# 		reward -= 0.5
+	reward += max(-10,-dist_to_cube)*0.3 # reward for agent being close to object
+	# else:
+		# was_just_reset = false
 	# reward for being close to object
+	# reward for having object close to target
+	reward += max(-10,-distance)*0.3 + 3
 	last_dist = distance
 	return reward
 
